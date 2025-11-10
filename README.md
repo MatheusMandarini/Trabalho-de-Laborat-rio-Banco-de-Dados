@@ -1,4 +1,4 @@
-# Trabalho-de-Laborat-rio-Banco-de-Dados
+# Trabalho-de-Laboratorio-Banco-de-Dados
 Aplicar os conceitos e estudos da disciplina de Banco de Dados e Laboratório de Banco de
 Dados para desenvolver um projeto para um banco de dados, com foco na implementação do banco
 dedos, consultas e regras negócios para o tema definido a partir de uma modelagem conceitual
