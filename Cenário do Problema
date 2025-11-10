@@ -1,0 +1,25 @@
+Uma instituição social realiza diversos projetos comunitários voltados a causas como educação, meio ambiente, saúde e inclusão social. Cada instituição possui um endereço
+com informações como cidade, estado, rua, número, CEP e bairro, além de dados de contato como nome, CNPJ, e-mail e telefone.
+
+Essas instituições mantêm projetos sociais, e cada projeto tem um nome, descrição, data de início, data de término e está relacionado a uma categoria de projeto 
+(por exemplo: ambiental, educacional, cultural, etc.). Um projeto pode envolver vários participantes e estar vinculado a apenas uma instituição.
+
+Os participantes são pessoas que atuam nos projetos e podem assumir diferentes funções. Cada participação possui informações como data de início, data de término,
+status (ativo, concluído, em andamento) e carga horária total dedicada ao projeto. O vínculo entre o participante e o projeto é feito através dessa relação de participação.
+
+As pessoas envolvidas nos projetos são registradas como funcionários da instituição. Cada funcionário tem dados pessoais como nome, CPF, e-mail, telefone, data de nascimento e gênero.
+
+Entre os funcionários, existem dois papéis principais:
+
+Voluntário: atua executando atividades dentro dos projetos. Cada voluntário possui informações sobre sua experiência prévia e participa de uma ou mais ações.
+
+Coordenador: é responsável por gerenciar projetos e designar voluntários para determinadas atividades. O coordenador possui uma área de coordenação e uma data de 
+designação em cada projeto que supervisiona.
+
+Durante a execução dos projetos, os voluntários realizam atividades registradas, onde são anotadas informações como data da atividade, descrição e horas trabalhadas.
+Cada registro de atividade está ligado a uma participação específica, permitindo saber quem executou e quando.
+
+O sistema também precisa controlar o endereço das instituições, garantindo que cada uma possa ter apenas um endereço, e cada endereço pertença a uma única instituição.
+
+Com esse sistema, será possível organizar e acompanhar todos os projetos sociais, saber quem participa de cada um, quem coordena as ações, quais atividades foram realizadas
+e quantas horas foram dedicadas.
