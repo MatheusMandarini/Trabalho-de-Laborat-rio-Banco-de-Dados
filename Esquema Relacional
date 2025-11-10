@@ -1,1 +1,23 @@
+Instituicao(--cnpj, nome, telefone, #id_endereco)
+Email_Instituicao(--#cnpj_instituicao, --Email_instituicao)
+Telefone_instituicao(--#cnpj_instituicao, --Telefone_instituicao)
+
+Endereco(--id_endereco, rua, numero, bairro, cidade, estado, cep)
+
+Funcionario(--cpf, primeiro, meio, ultimo, telefone, data_nascimento, genero)
+Email_Funcionario(--#cpf_funcionario, --Email_funcionario)
+
+Voluntario(--#cpf, experiencia)
+Participa(--#id_projeto, --#cpf)
+
+Coordenador(--#cpf, area_coordenacao)
+Coordena(--#cpf, --#id_projeto)
+
+Categoria_Projeto(--id_categoria, nome)
+
+Projeto(--id_projeto, nome, descricao, data_inicio, data_fim, #cnpj_intituicao, #id_categoria)
+
+Participacao(--id_participacao, funcao, data_inicio, data_fim, status, carga_horaria_total, valor, #cpf, #id_projeto)
+Registro_Atividades(--id_registro, data_atividade, horas_trabalhadas, descricao, #id_participacao)
+Designacao(--#cpf_funcionario, --#id_projeto, --#cnpj_instituicao, data_designacao)
 
