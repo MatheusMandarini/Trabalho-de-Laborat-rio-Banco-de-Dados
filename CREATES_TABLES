@@ -55,10 +55,34 @@ CREATE TABLE Voluntario (
     FOREIGN KEY (cpf_voluntario) REFERENCES Funcionario(cpf)
 );
 
+CREATE TABLE Voluntario_Realiza_Projeto (
+    id_projeto INT NOT NULL,
+    cpf_voluntario CHAR(11) NOT NULL,
+    PRIMARY KEY (id_projeto, cpf_voluntario),
+    FOREIGN KEY (id_projeto) REFERENCES Projeto(id_projeto),
+    FOREIGN KEY (cpf_voluntario) REFERENCES Voluntario(cpf_voluntario)
+);
+
 CREATE TABLE Coordenador (
     cpf_coordenador CHAR(11) PRIMARY KEY,
     area_coordenacao VARCHAR(100) NOT NULL,
     FOREIGN KEY (cpf_coordenador) REFERENCES Funcionario(cpf)
+);
+
+CREATE TABLE Coordena (
+    cpf_coordenador CHAR(11) NOT NULL,
+    id_projeto INT NOT NULL,
+    PRIMARY KEY (cpf_coordenador, id_projeto),
+    FOREIGN KEY (cpf_coordenador) REFERENCES Coordenador(cpf_coordenador),
+    FOREIGN KEY (id_projeto) REFERENCES Projeto(id_projeto)
+);
+
+CREATE TABLE Coordenador_Coordena_Projeto (
+    cpf_coordenador CHAR(11) NOT NULL,
+    id_projeto INT NOT NULL,
+    PRIMARY KEY (cpf_coordenador, id_projeto),
+    FOREIGN KEY (cpf_coordenador) REFERENCES Coordenador(cpf_coordenador),
+    FOREIGN KEY (id_projeto) REFERENCES Projeto(id_projeto)
 );
 
 CREATE TABLE Categoria_Projeto (
@@ -73,9 +97,9 @@ CREATE TABLE Projeto (
     data_inicio DATE NOT NULL,
     data_fim DATE,
     valor DECIMAL(12,2) NOT NULL CHECK (valor >= 0),
-    cnpj_instituicao CHAR(14) NOT NULL,
+    cnpj_intituicao CHAR(14) NOT NULL,
     id_categoria INT NOT NULL,
-    FOREIGN KEY (cnpj_instituicao) REFERENCES Instituicao(cnpj),
+    FOREIGN KEY (cnpj_intituicao) REFERENCES Instituicao(cnpj),
     FOREIGN KEY (id_categoria) REFERENCES Categoria_Projeto(id_categoria)
 );
 
@@ -98,22 +122,6 @@ CREATE TABLE Voluntario_Realiza_Participacao (
     PRIMARY KEY (id_participacao, cpf_voluntario),
     FOREIGN KEY (id_participacao) REFERENCES Participacao(id_participacao),
     FOREIGN KEY (cpf_voluntario) REFERENCES Voluntario(cpf_voluntario)
-);
-
-CREATE TABLE Coordena (
-    cpf CHAR(11) NOT NULL,
-    id_projeto INT NOT NULL,
-    PRIMARY KEY (cpf, id_projeto),
-    FOREIGN KEY (cpf) REFERENCES Coordenador(cpf_coordenador),
-    FOREIGN KEY (id_projeto) REFERENCES Projeto(id_projeto)
-);
-
-CREATE TABLE Coordenador_Coordena_Projeto (
-    cpf_coordenador CHAR(11) NOT NULL,
-    id_projeto INT NOT NULL,
-    PRIMARY KEY (cpf_coordenador, id_projeto),
-    FOREIGN KEY (cpf_coordenador) REFERENCES Coordenador(cpf_coordenador),
-    FOREIGN KEY (id_projeto) REFERENCES Projeto(id_projeto)
 );
 
 CREATE TABLE Registro_Atividades (
