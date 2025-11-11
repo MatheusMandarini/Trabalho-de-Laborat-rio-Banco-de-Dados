@@ -4,20 +4,23 @@ Telefone_instituicao(--#cnpj_instituicao, --Telefone_instituicao)
 
 Endereco(--id_endereco, rua, numero, bairro, cidade, estado, cep)
 
-Funcionario(--cpf, primeiro, meio, ultimo, telefone, data_nascimento, genero)
+Funcionario(--cpf, primeiro, meio, ultimo, data_nascimento, genero, telefone, #id_endereco)
 Email_Funcionario(--#cpf_funcionario, --Email_funcionario)
 
-Voluntario(--#cpf, experiencia)
-Participa(--#id_projeto, --#cpf)
+Voluntario(--#cpf_voluntario, experiencia)
+Voluntario_realiza_participacao(--#id_projeto, --#cpf)
 
-Coordenador(--#cpf, area_coordenacao)
+Coordenador(--#cpf_coordenador, area_coordenacao)
 Coordena(--#cpf, --#id_projeto)
+
+coordenador_coordena_projeto(--#cpf_coordenador, --#id_projeto)
+
+Voluntario_realiza_participacao(--#id_participacao, --#cpf_voluntario, Horas_trabalhadas)
+
+Participacao(--id_participacao, funcao, data_inicio, data_fim, status, #cpf, #id_projeto)
+Projeto(--id_projeto, nome, descricao, data_inicio, data_fim, valor, #cnpj_intituicao, #id_categoria)
 
 Categoria_Projeto(--id_categoria, nome)
 
-Projeto(--id_projeto, nome, descricao, data_inicio, data_fim, #cnpj_intituicao, #id_categoria)
-
-Participacao(--id_participacao, funcao, data_inicio, data_fim, status, carga_horaria_total, valor, #cpf, #id_projeto)
-Registro_Atividades(--id_registro, data_atividade, horas_trabalhadas, descricao, #id_participacao)
+Registro_Atividades(--id_registro, data_atividade, carga_horaria_total, descricao, #id_participacao)
 Designacao(--#cpf_funcionario, --#id_projeto, --#cnpj_instituicao, data_designacao)
-
