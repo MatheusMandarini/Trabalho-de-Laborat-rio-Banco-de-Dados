@@ -8,10 +8,10 @@ Funcionario(--cpf, primeiro, meio, ultimo, data_nascimento, genero, telefone, #i
 Email_Funcionario(--#cpf_funcionario, --Email_funcionario)
 
 Voluntario(--#cpf_voluntario, experiencia)
-Voluntario_realiza_participacao(--#id_projeto, --#cpf)
+Voluntario_realiza_participacao(--#id_projeto, --#cpf_voluntario)
 
 Coordenador(--#cpf_coordenador, area_coordenacao)
-Coordena(--#cpf, --#id_projeto)
+Coordena(--#cpf_coordenador, --#id_projeto)
 
 coordenador_coordena_projeto(--#cpf_coordenador, --#id_projeto)
 
