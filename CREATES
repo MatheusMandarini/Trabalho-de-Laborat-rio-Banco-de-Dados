@@ -1,0 +1,137 @@
+CREATE TABLE Endereco (
+    id_endereco INT PRIMARY KEY,
+    rua VARCHAR(100) NOT NULL,
+    numero VARCHAR(10) NOT NULL,
+    bairro VARCHAR(50) NOT NULL,
+    cidade VARCHAR(50) NOT NULL,
+    estado CHAR(2) NOT NULL CHECK (estado ~ '^[A-Z]{2}$'),
+    cep VARCHAR(10) NOT NULL CHECK (cep ~ '^[0-9]{5}-?[0-9]{3}$')
+);
+
+CREATE TABLE Instituicao (
+    cnpj CHAR(14) PRIMARY KEY CHECK (cnpj ~ '^[0-9]{14}$'),
+    nome VARCHAR(100) NOT NULL,
+    telefone VARCHAR(15) NOT NULL,
+    id_endereco INT NOT NULL,
+    FOREIGN KEY (id_endereco) REFERENCES Endereco(id_endereco)
+);
+
+CREATE TABLE Email_Instituicao (
+    cnpj_instituicao CHAR(14) NOT NULL,
+    email_instituicao VARCHAR(100) NOT NULL,
+    PRIMARY KEY (cnpj_instituicao, email_instituicao),
+    FOREIGN KEY (cnpj_instituicao) REFERENCES Instituicao(cnpj)
+);
+
+CREATE TABLE Telefone_Instituicao (
+    cnpj_instituicao CHAR(14) NOT NULL,
+    telefone_instituicao VARCHAR(15) NOT NULL,
+    PRIMARY KEY (cnpj_instituicao, telefone_instituicao),
+    FOREIGN KEY (cnpj_instituicao) REFERENCES Instituicao(cnpj)
+);
+
+CREATE TABLE Funcionario (
+    cpf CHAR(11) PRIMARY KEY CHECK (cpf ~ '^[0-9]{11}$'),
+    primeiro VARCHAR(50) NOT NULL,
+    meio VARCHAR(50),
+    ultimo VARCHAR(50) NOT NULL,
+    data_nascimento DATE NOT NULL,
+    genero CHAR(1) NOT NULL CHECK (genero IN ('M', 'F', 'O')),
+    telefone VARCHAR(15) NOT NULL,
+    id_endereco INT NOT NULL,
+    FOREIGN KEY (id_endereco) REFERENCES Endereco(id_endereco)
+);
+
+CREATE TABLE Email_Funcionario (
+    cpf_funcionario CHAR(11) NOT NULL,
+    email_funcionario VARCHAR(100) NOT NULL,
+    PRIMARY KEY (cpf_funcionario, email_funcionario),
+    FOREIGN KEY (cpf_funcionario) REFERENCES Funcionario(cpf)
+);
+
+CREATE TABLE Voluntario (
+    cpf_voluntario CHAR(11) PRIMARY KEY,
+    experiencia TEXT,
+    FOREIGN KEY (cpf_voluntario) REFERENCES Funcionario(cpf)
+);
+
+CREATE TABLE Coordenador (
+    cpf_coordenador CHAR(11) PRIMARY KEY,
+    area_coordenacao VARCHAR(100) NOT NULL,
+    FOREIGN KEY (cpf_coordenador) REFERENCES Funcionario(cpf)
+);
+
+CREATE TABLE Categoria_Projeto (
+    id_categoria INT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE Projeto (
+    id_projeto INT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    data_inicio DATE NOT NULL,
+    data_fim DATE,
+    valor DECIMAL(12,2) NOT NULL CHECK (valor >= 0),
+    cnpj_instituicao CHAR(14) NOT NULL,
+    id_categoria INT NOT NULL,
+    FOREIGN KEY (cnpj_instituicao) REFERENCES Instituicao(cnpj),
+    FOREIGN KEY (id_categoria) REFERENCES Categoria_Projeto(id_categoria)
+);
+
+CREATE TABLE Participacao (
+    id_participacao INT PRIMARY KEY,
+    funcao VARCHAR(100) NOT NULL,
+    data_inicio DATE NOT NULL,
+    data_fim DATE,
+    status VARCHAR(50) NOT NULL CHECK (status IN ('Ativa', 'Concluída', 'Cancelada')),
+    cpf CHAR(11) NOT NULL,
+    id_projeto INT NOT NULL,
+    FOREIGN KEY (cpf) REFERENCES Funcionario(cpf),
+    FOREIGN KEY (id_projeto) REFERENCES Projeto(id_projeto)
+);
+
+CREATE TABLE Voluntario_Realiza_Participacao (
+    id_participacao INT NOT NULL,
+    cpf_voluntario CHAR(11) NOT NULL,
+    horas_trabalhadas INT NOT NULL DEFAULT 0 CHECK (horas_trabalhadas >= 0),
+    PRIMARY KEY (id_participacao, cpf_voluntario),
+    FOREIGN KEY (id_participacao) REFERENCES Participacao(id_participacao),
+    FOREIGN KEY (cpf_voluntario) REFERENCES Voluntario(cpf_voluntario)
+);
+
+CREATE TABLE Coordena (
+    cpf CHAR(11) NOT NULL,
+    id_projeto INT NOT NULL,
+    PRIMARY KEY (cpf, id_projeto),
+    FOREIGN KEY (cpf) REFERENCES Coordenador(cpf_coordenador),
+    FOREIGN KEY (id_projeto) REFERENCES Projeto(id_projeto)
+);
+
+CREATE TABLE Coordenador_Coordena_Projeto (
+    cpf_coordenador CHAR(11) NOT NULL,
+    id_projeto INT NOT NULL,
+    PRIMARY KEY (cpf_coordenador, id_projeto),
+    FOREIGN KEY (cpf_coordenador) REFERENCES Coordenador(cpf_coordenador),
+    FOREIGN KEY (id_projeto) REFERENCES Projeto(id_projeto)
+);
+
+CREATE TABLE Registro_Atividades (
+    id_registro INT PRIMARY KEY,
+    data_atividade DATE NOT NULL,
+    carga_horaria_total INT NOT NULL CHECK (carga_horaria_total > 0),
+    descricao TEXT NOT NULL,
+    id_participacao INT NOT NULL,
+    FOREIGN KEY (id_participacao) REFERENCES Participacao(id_participacao)
+);
+
+CREATE TABLE Designacao (
+    cpf_funcionario CHAR(11) NOT NULL,
+    id_projeto INT NOT NULL,
+    cnpj_instituicao CHAR(14) NOT NULL,
+    data_designacao DATE NOT NULL DEFAULT CURRENT_DATE,
+    PRIMARY KEY (cpf_funcionario, id_projeto, cnpj_instituicao),
+    FOREIGN KEY (cpf_funcionario) REFERENCES Funcionario(cpf),
+    FOREIGN KEY (id_projeto) REFERENCES Projeto(id_projeto),
+    FOREIGN KEY (cnpj_instituicao) REFERENCES Instituicao(cnpj)
+);
